@@ -18,7 +18,7 @@ public class CamelSql extends RouteBuilder {
   @Override
   public void configure() throws Exception {
 
-    from("sql:SELECT * FROM tmp.customers where id > :#${bean:lastIdService.getId} ?outputType=StreamList&outputClass=com.example.apachecamelsql.Customer")
+    from("sql:SELECT TOP 10 * FROM tmp.customers where id > :#${bean:lastIdService.getId} order by id ASC ?outputType=StreamList&outputClass=com.example.apachecamelsql.Customer")
         .id("sql-route")
         .to("log:stream")
         .split(body()).streaming()
